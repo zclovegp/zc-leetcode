@@ -30,7 +30,7 @@ package half;
  *
  * @author zhaochong on 2022/8/26 19:43
  */
-public class MySqrt {
+public class EasyMySqrt {
 
 	public static void main(String[] args) {
 		System.out.println(mySqrt(4));
