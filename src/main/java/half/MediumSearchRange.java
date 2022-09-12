@@ -60,17 +60,9 @@ public class MediumSearchRange {
 		int startIndex = 0;
 		int endIndex = nums.length - 1;
 		int targetMinStart = -1;
-		while (true) {
-			int midIndex = (startIndex + endIndex) / 2;
+		while (startIndex <= endIndex) {
 
-			// 开始=结束
-			if (startIndex >= endIndex) {
-				// 边界处理
-				if (startIndex == endIndex && nums[startIndex] == target) {
-					targetMinStart = startIndex;
-				}
-				break;
-			}
+			int midIndex = (startIndex + endIndex) / 2;
 
 			// 目标值在左边
 			if (nums[midIndex] > target) {
