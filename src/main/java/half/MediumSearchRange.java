@@ -1,5 +1,7 @@
 package half;
 
+import java.util.Arrays;
+
 /**
  * 给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。
  * <p>
@@ -40,7 +42,7 @@ public class MediumSearchRange {
 
 	public static void main(String[] args) {
 		int[] nums = new int[]{5, 7, 7, 8, 8, 10};
-		searchRange(nums,8);
+		System.out.println(Arrays.toString(searchRange(nums, 8)));
 	}
 
 	public static int[] searchRange(int[] nums, int target) {
@@ -48,33 +50,75 @@ public class MediumSearchRange {
 			return new int[]{-1, -1};
 		}
 
+		int targetMinStart = getMinStart(nums, target);
+		int targetMaxEnd = getMaxEnd(nums, target);
+
+		return new int[]{targetMinStart, targetMaxEnd};
+	}
+
+	private static int getMinStart(int[] nums, int target) {
 		int startIndex = 0;
 		int endIndex = nums.length - 1;
 		int targetMinStart = -1;
 		while (true) {
-			int midIndex = startIndex + endIndex / 2;
+			int midIndex = (startIndex + endIndex) / 2;
 
 			// 开始=结束
-			if (startIndex == endIndex) {
+			if (startIndex >= endIndex) {
+				// 边界处理
+				if (startIndex == endIndex && nums[startIndex] == target) {
+					targetMinStart = startIndex;
+				}
 				break;
 			}
 
 			// 目标值在左边
 			if (nums[midIndex] > target) {
-				endIndex = midIndex;
+				endIndex = midIndex - 1;
 			}
 			// 目标值在右边
 			else if (nums[midIndex] < target) {
-				startIndex = midIndex;
+				startIndex = midIndex + 1;
 			}
 			// 相等
 			else {
 				targetMinStart = midIndex;
-				endIndex = midIndex;
+				endIndex = midIndex - 1;
 			}
 		}
+		return targetMinStart;
+	}
 
-		System.out.println(targetMinStart);
-		return null;
+	private static int getMaxEnd(int[] nums, int target) {
+		int startIndex = 0;
+		int endIndex = nums.length - 1;
+		int targetMinStart = -1;
+		while (true) {
+			int midIndex = (startIndex + endIndex) / 2;
+
+			// 开始=结束
+			if (startIndex >= endIndex) {
+				// 边界处理
+				if (startIndex == endIndex && nums[startIndex] == target) {
+					targetMinStart = startIndex;
+				}
+				break;
+			}
+
+			// 目标值在左边
+			if (nums[midIndex] > target) {
+				endIndex = midIndex - 1;
+			}
+			// 目标值在右边
+			else if (nums[midIndex] < target) {
+				startIndex = midIndex + 1;
+			}
+			// 相等
+			else {
+				targetMinStart = midIndex;
+				startIndex = midIndex + 1;
+			}
+		}
+		return targetMinStart;
 	}
 }
