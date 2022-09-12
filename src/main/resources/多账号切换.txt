@@ -1,0 +1,2 @@
+git config user.name "zclovegp"
+git config user.email "1532458519@qq.com"
