@@ -1,2 +1,2 @@
-git config --global user.name "zclovegp"
-git config --global user.email "1532458519@qq.com"
+ssh-agent -s
+ssh-add ~/.ssh/zc_private
