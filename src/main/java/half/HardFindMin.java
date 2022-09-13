@@ -35,10 +35,47 @@ package half;
 public class HardFindMin {
 
 	public static void main(String[] args) {
-
+		System.out.println(findMin(new int[]{3, 1}));
 	}
 
-	public int findMin(int[] nums) {
+	public static int findMin(int[] nums) {
+		int start = 0;
+		int end = nums.length - 1;
+		int currentMin = nums[0];
 
+		while (start <= end) {
+
+			int mid = (start + end) / 2;
+
+			// 无法判定左边还是右边有序
+			if (nums[start] == nums[mid]) {
+				if (nums[start] < currentMin) {
+					currentMin = nums[start];
+				}
+				start++;
+				continue;
+			}
+
+			// 左边有序
+			if (nums[mid] > nums[start]) {
+				if (nums[start] < currentMin) {
+					currentMin = nums[start];
+				}
+
+				// 把注意放到另一侧无序列的
+				start = mid + 1;
+			}
+			// 右边有序
+			else {
+				if (nums[mid] < currentMin) {
+					currentMin = nums[mid];
+				}
+
+				// 把注意放到另一侧无序列的
+				end = mid - 1;
+			}
+		}
+
+		return currentMin;
 	}
 }
