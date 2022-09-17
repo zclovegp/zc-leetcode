@@ -30,20 +30,49 @@ package half;
 public class MediumSingleNonDuplicate {
 
 	public static void main(String[] args) {
+		System.out.println(singleNonDuplicate(new int[]{1, 1, 2, 2, 3}));
 	}
 
 	public static int singleNonDuplicate(int[] nums) {
+
+		if (nums.length == 1) {
+			return nums[0];
+		}
 
 		int l = 0;
 		int r = nums.length - 1;
 
 		while (l <= r) {
 
-			// 如果=左边，看左边是不是偶数长度，如果是偶数长度，就说明再另一边，如果是奇数长度，说明在这一边
-			// 如果=右边，看右边是不是偶数长度，如果是偶数长度，就说明再另一边，如果是奇数长度，说明在这一边
+			if (l == r) {
+				return nums[l];
+			}
 
+			int mid = (l + r) / 2;
+
+			// 如果=左边，看左边是不是偶数长度，如果是偶数长度，就说明再另一边，如果是奇数长度，说明在这一边
+			if (nums[mid] == nums[mid - 1]) {
+				// 奇数个
+				if ((l + mid) % 2 == 0) {
+					r = mid - 2;
+				} else {
+					l = mid + 1;
+				}
+			}
+
+			// 如果=右边，看右边是不是偶数长度，如果是偶数长度，就说明再另一边，如果是奇数长度，说明在这一边
+			else if (nums[mid] == nums[mid + 1]) {
+				// 奇数个
+				if ((r + mid) % 2 == 0) {
+					l = mid + 2;
+				} else {
+					r = mid - 1;
+				}
+			} else {
+				return nums[mid];
+			}
 		}
 
-		return 0;
+		throw new RuntimeException("不可能走到这里");
 	}
 }
