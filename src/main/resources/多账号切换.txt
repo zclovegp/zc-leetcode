@@ -1,3 +1,5 @@
 ssh-agent -s
 ssh-add ~/.ssh/zc_private
 
+!!!提交后记着恢复回来!!!
+git config --global --replace-all user.name "chong.zhao"
