@@ -20,6 +20,7 @@ public class EasyClimbStairs {
 		if (n == 2) {
 			return 2;
 		}
+		// 爬的所有楼梯方法数 = 最后走到了n-1的台阶 和 最后走到n-2的台阶
 		return climbStairs(n - 1) + climbStairs(n - 2);
 	}
 

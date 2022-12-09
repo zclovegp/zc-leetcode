@@ -15,11 +15,10 @@ public class EasyReverseLinkTable {
 		}
 
 		ListNode pre = null;
-		ListNode next = null;
 		ListNode current = head;
 
 		while (current != null) {
-			next = current.next;
+			ListNode next = current.next;
 			current.next = pre;
 			pre = current;
 			current = next;
