@@ -1,4 +1,4 @@
-package greed;
+package 贪心算法;
 
 import java.util.Arrays;
 

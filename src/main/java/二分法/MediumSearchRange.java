@@ -1,4 +1,4 @@
-package half;
+package 二分法;
 
 import java.util.Arrays;
 

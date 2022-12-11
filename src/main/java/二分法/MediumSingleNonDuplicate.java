@@ -1,4 +1,4 @@
-package half;
+package 二分法;
 
 /**
  * 540. 有序数组中的单一元素

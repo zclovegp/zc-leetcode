@@ -1,4 +1,4 @@
-package dynamic;
+package 动态规划;
 
 /**
  * 198. 打家劫舍

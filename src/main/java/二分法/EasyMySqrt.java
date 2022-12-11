@@ -1,4 +1,4 @@
-package half;
+package 二分法;
 
 /**
  * 给你一个非负整数 x ，计算并返回 x 的 算术平方根 。

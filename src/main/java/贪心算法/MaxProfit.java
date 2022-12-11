@@ -1,4 +1,4 @@
-package greed;
+package 贪心算法;
 
 /**
  * 给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。

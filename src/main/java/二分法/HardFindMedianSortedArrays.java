@@ -1,4 +1,4 @@
-package half;
+package 二分法;
 
 /**
  * 4. 寻找两个正序数组的中位数

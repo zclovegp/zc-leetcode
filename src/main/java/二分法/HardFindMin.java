@@ -1,4 +1,4 @@
-package half;
+package 二分法;
 
 /**
  * 154. 寻找旋转排序数组中的最小值 II
