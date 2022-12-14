@@ -35,18 +35,21 @@ package 动态规划;
 public class EasyThief {
 
 	public static void main(String[] args) {
-		System.out.println(rob(new int[]{1, 2, 3, 1}));
-		System.out.println(rob(new int[]{2, 7, 9, 3, 1}));
+		System.out.println(robV1(new int[]{1, 2, 3, 1}));
+		System.out.println(robV1(new int[]{2, 7, 9, 3, 1}));
 
-		System.out.println(doRob(new int[]{1, 2, 3, 1}));
-		System.out.println(doRob(new int[]{2, 7, 9, 3, 1}));
+		System.out.println(doRobV2(new int[]{1, 2, 3, 1}));
+		System.out.println(doRobV2(new int[]{2, 7, 9, 3, 1}));
+
+		System.out.println(doRobV3(new int[]{1, 2, 3, 1}));
+		System.out.println(doRobV3(new int[]{2, 7, 9, 3, 1}));
 	}
 
-	public static int rob(int[] nums) {
-		return rob(nums.length, nums);
+	public static int robV1(int[] nums) {
+		return robV1(nums.length, nums);
 	}
 
-	public static int rob(int k, int[] nums) {
+	public static int robV1(int k, int[] nums) {
 
 		if (k == 1) {
 			return nums[0];
@@ -57,10 +60,31 @@ public class EasyThief {
 		}
 
 		// f(k) = max( f(k-1)【不偷最后一家】, f(k-2)+h(k-1)【偷最后一家】 )
-		return Math.max(rob(k - 1, nums), rob(k - 2, nums) + nums[k - 1]);
+		return Math.max(robV1(k - 1, nums), robV1(k - 2, nums) + nums[k - 1]);
 	}
 
-	public static int doRob(int[] nums) {
+	public static int doRobV2(int[] nums) {
+		if (nums.length == 1) {
+			return nums[0];
+		}
+
+		if (nums.length == 2) {
+			return Math.max(nums[0], nums[1]);
+		}
+
+		int[] d = new int[nums.length];
+		d[0] = nums[0];
+		d[1] = Math.max(nums[0], nums[1]);
+
+		for (int i = 2; i < nums.length; i++) {
+			// d[k] = MAX(d[k-1],d[k-2] + h[k])
+			d[i] = Math.max(d[i - 1], d[i - 2] + nums[i]);
+		}
+
+		return d[d.length - 1];
+	}
+
+	public static int doRobV3(int[] nums) {
 		if (nums.length == 1) {
 			return nums[0];
 		}
