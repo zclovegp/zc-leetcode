@@ -6,8 +6,8 @@ package 动态规划;
 public class EasyClimbStairs {
 
 	public static void main(String[] args) {
-		System.out.println(climbStairs(3));
-		System.out.println(climbStairs2(3));
+		System.out.println(climbStairs(6));
+		System.out.println(climbStairs2(6));
 	}
 
 	/**
@@ -28,17 +28,21 @@ public class EasyClimbStairs {
 	 * 斐波那契数列正着写
 	 */
 	public static int climbStairs2(int n) {
-		if (n <= 2) {
-			return n;
+		if (n == 1) {
+			return 1;
 		}
-		int pre1 = 2;
-		int pre2 = 1;
-		int cur = 0;
-		for (int i = 2; i < n; ++i) {
-			cur = pre1 + pre2;
-			pre2 = pre1;
-			pre1 = cur;
+		if (n == 2) {
+			return 2;
 		}
-		return cur;
+
+		int prePre = 1;
+		int pre = 2;
+		int result = 0;
+		for (int i = 3; i <= n; i++) {
+			result = prePre + pre;
+			prePre = pre;
+			pre = result;
+		}
+		return result;
 	}
 }
