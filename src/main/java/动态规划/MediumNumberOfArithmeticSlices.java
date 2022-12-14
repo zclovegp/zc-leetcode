@@ -58,4 +58,6 @@ public class MediumNumberOfArithmeticSlices {
 
 		return accCount;
 	}
+
+	// TODO 思考下如果用递推公式法如何实现
 }

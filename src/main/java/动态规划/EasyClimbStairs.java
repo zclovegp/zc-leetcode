@@ -8,6 +8,7 @@ public class EasyClimbStairs {
 	public static void main(String[] args) {
 		System.out.println(climbStairs(6));
 		System.out.println(climbStairs2(6));
+		System.out.println(climbStairs3(6));
 	}
 
 	/**
@@ -44,5 +45,25 @@ public class EasyClimbStairs {
 			pre = result;
 		}
 		return result;
+	}
+
+	/**
+	 * 未做空间优化的递推
+	 */
+	public static int climbStairs3(int n) {
+		if (n == 1) {
+			return 1;
+		}
+		if (n == 2) {
+			return 2;
+		}
+
+		int[] d = new int[n];
+		d[0] = 1;
+		d[1] = 2;
+		for (int i = 2; i < n; i++) {
+			d[i] = d[i - 1] + d[i - 2];
+		}
+		return d[d.length - 1];
 	}
 }
