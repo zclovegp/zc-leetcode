@@ -36,10 +36,39 @@ public class MediumNumberOfArithmeticSlices {
 
 	public static void main(String[] args) {
 		int[] arr = new int[]{1, 2, 3, 4, 6, 8, 10};
-		System.out.println(numberOfArithmeticSlices(arr));
+		System.out.println(numberOfArithmeticSlicesV1(arr));
+		System.out.println(numberOfArithmeticSlicesV2(arr));
 	}
 
-	public static int numberOfArithmeticSlices(int[] nums) {
+	public static int numberOfArithmeticSlicesV1(int[] nums) {
+		if (nums.length < 3) {
+			return 0;
+		}
+
+		int[] d = new int[nums.length];
+		d[0] = 0;
+		d[1] = 0;
+		for (int i = 2; i < nums.length; i++) {
+			// 符合等差条件
+			if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]) {
+				// 3个是一个等差数组
+				// 4个新增两个等差数组
+				// 5个新增三个等差数组
+				d[i] = d[i - 1] + 1;
+			} else {
+				d[i] = 0;
+			}
+		}
+
+		// 加和
+		int all = 0;
+		for (int i : d) {
+			all += i;
+		}
+		return all;
+	}
+
+	public static int numberOfArithmeticSlicesV2(int[] nums) {
 		if (nums.length < 3) {
 			return 0;
 		}
@@ -58,6 +87,4 @@ public class MediumNumberOfArithmeticSlices {
 
 		return accCount;
 	}
-
-	// TODO 思考下如果用递推公式法如何实现
 }

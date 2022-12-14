@@ -25,10 +25,31 @@ public class EasyClimbStairs {
 		return climbStairs(n - 1) + climbStairs(n - 2);
 	}
 
+
 	/**
-	 * 斐波那契数列正着写
+	 * 未做空间优化的递推
 	 */
 	public static int climbStairs2(int n) {
+		if (n == 1) {
+			return 1;
+		}
+		if (n == 2) {
+			return 2;
+		}
+
+		int[] d = new int[n];
+		d[0] = 1;
+		d[1] = 2;
+		for (int i = 2; i < n; i++) {
+			d[i] = d[i - 1] + d[i - 2];
+		}
+		return d[d.length - 1];
+	}
+
+	/**
+	 * 已做空间优化的递推
+	 */
+	public static int climbStairs3(int n) {
 		if (n == 1) {
 			return 1;
 		}
@@ -45,25 +66,5 @@ public class EasyClimbStairs {
 			pre = result;
 		}
 		return result;
-	}
-
-	/**
-	 * 未做空间优化的递推
-	 */
-	public static int climbStairs3(int n) {
-		if (n == 1) {
-			return 1;
-		}
-		if (n == 2) {
-			return 2;
-		}
-
-		int[] d = new int[n];
-		d[0] = 1;
-		d[1] = 2;
-		for (int i = 2; i < n; i++) {
-			d[i] = d[i - 1] + d[i - 2];
-		}
-		return d[d.length - 1];
 	}
 }
