@@ -1,6 +1,8 @@
 package 动态规划;
 
 /**
+ * 🔥d[n] = d[n-1] + d[n-2]🔥
+ *
  * @author zhaochong on 2022/11/15 16:49
  */
 public class EasyClimbStairs {
