@@ -1,6 +1,8 @@
 package 排序;
 
 import java.util.Arrays;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author zhaochong on 2022/10/6 22:34
@@ -8,50 +10,67 @@ import java.util.Arrays;
 public class FastSort {
 
 	public static void main(String[] args) {
-		int[] targetArr = new int[]{6, 6, 2, 7, 9, 8, 4, 5, 10, 8};
-		fastSort(targetArr, 0, 9);
+		int[] targetArr = new int[]{8, 8, 5, 1, 3, 2, 6, 3, 4, 9, 6, 6, 2, 7, 9, 8, 4, 5, 10, 8};
+		fastSortV2(targetArr);
 		System.out.println(Arrays.toString(targetArr));
 	}
 
-	public static void fastSort(int[] targetArr, int staticLeft, int staticRight) {
-		if (staticLeft >= staticRight) {
-			return;
-		}
+	/**
+	 * 递推实现
+	 */
+	public static void fastSortV2(int[] targetArr) {
+		Queue<int[]> targetQueue = new ConcurrentLinkedQueue<>();
+		int[] startWithEnd = new int[]{0, targetArr.length - 1};
+		targetQueue.add(startWithEnd);
 
-		int targetIndex = staticLeft;
-		int targetValue = targetArr[targetIndex];
-		int left = staticLeft;
-		int right = staticRight;
-		String startFromLeftOrRight = "right";
+		while (true) {
 
-		// 一次快排结束
-		while (left < right) {
-			if (startFromLeftOrRight.equals("right")) {
-				if (targetValue <= targetArr[right]) {
-					right--;
-				} else {
-					switchLeftAndRight(targetArr, left, right);
-					startFromLeftOrRight = "left";
-					targetIndex = right;
+			int[] leftWithRight = targetQueue.poll();
+			if (leftWithRight == null) {
+				break;
+			}
+
+			int leftIndex = leftWithRight[0];
+			int rightIndex = leftWithRight[1];
+			String forward = "right";
+
+			// 一次快排
+			while (true) {
+				if (leftIndex >= rightIndex) {
+					// 往队列里新增新的计算索引
+					if (leftIndex - 1 > leftWithRight[0]) {
+						targetQueue.add(new int[]{leftWithRight[0], leftIndex - 1});
+					}
+					if (leftWithRight[1] > leftIndex + 1) {
+						targetQueue.add(new int[]{leftIndex + 1, leftWithRight[1]});
+					}
+					break;
 				}
-			} else {
-				if (targetValue >= targetArr[left]) {
-					left++;
-				} else {
-					switchLeftAndRight(targetArr, left, right);
-					startFromLeftOrRight = "right";
-					targetIndex = left;
+
+				if ("right".equals(forward)) {
+					if (targetArr[leftIndex] <= targetArr[rightIndex]) {
+						rightIndex--;
+					} else {
+						swapValue(targetArr, leftIndex, rightIndex);
+						forward = "left";
+					}
+				}
+
+				if ("left".equals(forward)) {
+					if (targetArr[rightIndex] >= targetArr[leftIndex]) {
+						leftIndex++;
+					} else {
+						swapValue(targetArr, leftIndex, rightIndex);
+						forward = "right";
+					}
 				}
 			}
 		}
-
-		fastSort(targetArr, staticLeft, targetIndex - 1);
-		fastSort(targetArr, targetIndex + 1, staticRight);
 	}
 
-	private static void switchLeftAndRight(int[] targetArr, int left, int right) {
-		int tmp = targetArr[left];
-		targetArr[left] = targetArr[right];
-		targetArr[right] = tmp;
+	private static void swapValue(int[] targetArr, int leftIndex, int rightIndex) {
+		int tmp = targetArr[leftIndex];
+		targetArr[leftIndex] = targetArr[rightIndex];
+		targetArr[rightIndex] = tmp;
 	}
 }
