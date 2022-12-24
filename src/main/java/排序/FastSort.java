@@ -2,7 +2,7 @@ package 排序;
 
 import java.util.Arrays;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author zhaochong on 2022/10/6 22:34
@@ -19,7 +19,7 @@ public class FastSort {
 	 * 递推实现
 	 */
 	public static void fastSortV2(int[] targetArr) {
-		Queue<int[]> targetQueue = new ConcurrentLinkedQueue<>();
+		Queue<int[]> targetQueue = new LinkedBlockingQueue<>();
 		int[] startWithEnd = new int[]{0, targetArr.length - 1};
 		targetQueue.add(startWithEnd);
 
