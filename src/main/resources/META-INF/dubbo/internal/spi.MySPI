@@ -1,0 +1,2 @@
+man=spi.jdk.impl.ManSPI
+woman=spi.jdk.impl.WomanSPI
