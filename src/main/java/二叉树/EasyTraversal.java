@@ -6,19 +6,19 @@ import java.util.Stack;
 
 /**
  * 迭代的通用写法
- *
+ * <p>
  * while (!stack.isNotEmpty || curRoot != null) {
- *
- *     while (curRoot.left != null) {
- *         // 压栈
- *         // 如果是前序在这里addResult
- *     }
- *
- * 	  // 如果是前序和中序，这里可以stack.pop()
- *    // 如果是中序在这里addResult
- *
- *	  // 如果是后序在这里stack.peek()，需要判定是否是从下往上返回的节点，如果是才能addResult，并出栈
- *
+ * <p>
+ * while (curRoot.left != null) {
+ * // 压栈
+ * // 如果是前序在这里addResult
+ * }
+ * <p>
+ * // 如果是前序和中序，这里可以stack.pop()
+ * // 如果是中序在这里addResult
+ * <p>
+ * // 如果是后序在这里stack.peek()，需要判定是否是从下往上返回的节点，如果是才能addResult，并出栈
+ * <p>
  * }
  *
  * @author zhaochong on 2022/12/27 07:00
@@ -118,6 +118,8 @@ public class EasyTraversal {
 
 			// 左子树遍历完成，不要出栈，开始右子树
 			currentRoot = stack.peek();
+
+			// 左右子树都处理完，需要把currentRoot=null（不能再遍历了）
 			if (currentRoot.right == null || currentRoot.right == lastRoot) {
 				stack.pop();
 				result.add(currentRoot.val);
