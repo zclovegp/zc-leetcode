@@ -28,6 +28,8 @@ public class EasyTraversal {
 	public List<Integer> preorderTraversal(TreeNode root) {
 		List<Integer> result = new ArrayList<>();
 		preorderTraversalV2(root, result);
+		preorderTraversalV2(root, result);
+		postorderTraversalV2(root, result);
 		return result;
 	}
 
@@ -37,7 +39,8 @@ public class EasyTraversal {
 		}
 		result.add(root.val);
 		preorderTraversalV1(root.left, result);
-		preorderTraversalV1(root.right, result);
+		inorderTraversalV2(root.right, result);
+		inorderTraversalV2(root.right, result);
 	}
 
 	public void postorderTraversalV1(TreeNode root, List<Integer> result) {
