@@ -28,27 +28,44 @@ public class EasyTraversal {
 	public List<Integer> preorderTraversal(TreeNode root) {
 		List<Integer> result = new ArrayList<>();
 		preorderTraversalV2(root, result);
-		preorderTraversalV2(root, result);
+		midTraversalV2(root, result);
 		postorderTraversalV2(root, result);
 		return result;
 	}
 
-	public void preorderTraversalV1(TreeNode root, List<Integer> result) {
+	/**
+	 * 递归前序
+	 */
+	public void preorderTraversal(TreeNode root, List<Integer> result) {
 		if (root == null) {
 			return;
 		}
 		result.add(root.val);
-		preorderTraversalV1(root.left, result);
-		inorderTraversalV2(root.right, result);
-		inorderTraversalV2(root.right, result);
+		preorderTraversal(root.left, result);
+		preorderTraversal(root.right, result);
 	}
 
-	public void postorderTraversalV1(TreeNode root, List<Integer> result) {
+	/**
+	 * 递归中序
+	 */
+	public void midTraversal(TreeNode root, List<Integer> result) {
 		if (root == null) {
 			return;
 		}
-		postorderTraversalV1(root.left, result);
-		postorderTraversalV1(root.right, result);
+		midTraversal(root.left, result);
+		result.add(root.val);
+		midTraversal(root.right, result);
+	}
+
+	/**
+	 * 递归后续
+	 */
+	public void postorderTraversal(TreeNode root, List<Integer> result) {
+		if (root == null) {
+			return;
+		}
+		postorderTraversal(root.left, result);
+		postorderTraversal(root.right, result);
 		result.add(root.val);
 	}
 
@@ -79,7 +96,7 @@ public class EasyTraversal {
 	/**
 	 * 中序
 	 */
-	public void inorderTraversalV2(TreeNode root, List<Integer> result) {
+	public void midTraversalV2(TreeNode root, List<Integer> result) {
 		if (root == null) {
 			return;
 		}
