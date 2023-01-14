@@ -29,10 +29,7 @@ public class MediumSumTwoLinkedList {
 				continue;
 			}
 
-			if (!s2.isEmpty()) {
-				upBit = sumThenPushStack(result, upBit, s2.pop());
-				continue;
-			}
+			upBit = sumThenPushStack(result, upBit, s2.pop());
 		}
 
 		if (upBit) {
