@@ -2,6 +2,8 @@ package 链表;
 
 /**
  * @author zhaochong on 2023/1/5 21:32
+ * <p>
+ * TODO 可改进
  */
 public class MediumLinkOddEvenSort {
 
@@ -17,132 +19,71 @@ public class MediumLinkOddEvenSort {
 	}
 
 	public static ListNode sortLinkedList(ListNode head) {
-
-		// 拆分链表
-		int i = 1;
-		ListNode curNode = head;
-
-		ListNode oNode = null;
-		ListNode lastONode = null;
-
-		ListNode jNode = null;
-		ListNode lastJNode = null;
-
-		while (curNode != null) {
-
-			// 偶数
-			if (i % 2 == 0) {
-				if (oNode == null) {
-					oNode = new ListNode(curNode.val);
-					lastONode = oNode;
-				} else {
-					lastONode.next = new ListNode(curNode.val);
-					lastONode = lastONode.next;
-				}
-			}
-			// 奇数
-			else {
-				if (jNode == null) {
-					jNode = new ListNode(curNode.val);
-					lastJNode = jNode;
-				} else {
-					lastJNode.next = new ListNode(curNode.val);
-					lastJNode = lastJNode.next;
-				}
-			}
-
-			curNode = curNode.next;
-			i++;
-		}
-
+		// 拆分
+		ListNode[] divided = divide(head);
+		ListNode jHead = divided[0];
+		ListNode oHead = divided[1];
 		// 链表倒置
-		ListNode reversedONode = reverse(oNode);
-
+		ListNode reversedONode = reverse(oHead.next);
 		// 双指针合并
-		ListNode result = merge(reversedONode, jNode);
-
-		return result;
+		return merge(reversedONode, jHead.next);
 	}
 
-	public static ListNode reverse(ListNode root) {
-		if (root == null) {
-			return null;
+	public static ListNode[] divide(ListNode head) {
+		ListNode jHead = new ListNode();
+		ListNode oHead = new ListNode();
+		int i = 1;
+		ListNode jCur = jHead;
+		ListNode oCur = oHead;
+		while (head != null) {
+			// 偶
+			if (i % 2 == 0) {
+				oCur.next = head;
+				oCur = oCur.next;
+			} else {// 奇
+				jCur.next = head;
+				jCur = jCur.next;
+			}
+			head = head.next;
+			i++;
 		}
+		// 收尾
+		jCur.next = null;
+		oCur.next = null;
+		return new ListNode[]{jHead, oHead};
+	}
 
+	public static ListNode reverse(ListNode head) {
 		ListNode preNode = null;
-		ListNode curNode = root;
-		while (curNode != null) {
-			ListNode tmp = curNode.next;
-			curNode.next = preNode;
-			preNode = curNode;
-			curNode = tmp;
+		while (head != null) {
+			ListNode curNextNode = head.next;
+			head.next = preNode;
+			preNode = head;
+			head = curNextNode;
 		}
-
 		return preNode;
 	}
 
-	public static ListNode merge(ListNode root1, ListNode root2) {
-		ListNode index1 = root1;
-		ListNode index2 = root2;
-
-		ListNode result = null;
-		ListNode lastResult = null;
-		while (index1 != null || index2 != null) {
-
-			if (index1 != null && index2 != null) {
-				// 指针1小
-				if (index1.val < index2.val) {
-					if (result == null) {
-						result = new ListNode(index1.val);
-						lastResult = result;
-					} else {
-						lastResult.next = new ListNode(index1.val);
-						lastResult = lastResult.next;
-					}
-					// 指针1向后移动
-					index1 = index1.next;
-				} else {
-					if (result == null) {
-						result = new ListNode(index2.val);
-						lastResult = result;
-					} else {
-						lastResult.next = new ListNode(index2.val);
-						lastResult = lastResult.next;
-					}
-					// 指针2向后移动
-					index2 = index2.next;
-				}
-				continue;
+	public static ListNode merge(ListNode leftHead, ListNode rightHead) {
+		ListNode result = new ListNode();
+		ListNode resultCur = result;
+		while (leftHead != null && rightHead != null) {
+			if (leftHead.val < rightHead.val) {
+				resultCur.next = leftHead;
+				leftHead = leftHead.next;
+			} else {
+				resultCur.next = rightHead;
+				rightHead = rightHead.next;
 			}
-
-			if (index1 != null) {
-				if (result == null) {
-					result = new ListNode(index1.val);
-					lastResult = result;
-				} else {
-					lastResult.next = new ListNode(index1.val);
-					lastResult = lastResult.next;
-				}
-				// 指针1向后移动
-				index1 = index1.next;
-				continue;
-			}
-
-			if (index2 != null) {
-				if (result == null) {
-					result = new ListNode(index2.val);
-					lastResult = result;
-				} else {
-					lastResult.next = new ListNode(index2.val);
-					lastResult = lastResult.next;
-				}
-				// 指针2向后移动
-				index2 = index2.next;
-				continue;
-			}
+			resultCur = resultCur.next;
 		}
-
-		return result;
+		if (leftHead != null) {
+			resultCur.next = leftHead;
+		}
+		if (rightHead != null) {
+			resultCur.next = rightHead;
+		}
+		return result.next;
 	}
 
 	public static void printLinkedTable(ListNode root) {
@@ -161,5 +102,8 @@ class ListNode {
 
 	public ListNode(int val) {
 		this.val = val;
+	}
+
+	public ListNode() {
 	}
 }
