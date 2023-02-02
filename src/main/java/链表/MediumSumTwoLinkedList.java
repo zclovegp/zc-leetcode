@@ -1,80 +1,91 @@
 package 链表;
 
-import java.util.Stack;
-
 /**
  * @author zhaochong on 2023/1/12 08:29
- * <p>
- * TODO 可改进
  */
 public class MediumSumTwoLinkedList {
 
+	public static void main(String[] args) {
+		ListNode head1 = new ListNode(1);
+		ListNode head1Cur = head1;
+		for (int i = 7; i < 10; i++) {
+			head1Cur.next = new ListNode(i);
+			head1Cur = head1Cur.next;
+		}
+		LinkedHelper.printLinkedTable(head1);
+
+		ListNode head2 = new ListNode(9);
+		ListNode head2Cur = head2;
+		for (int i = 4; i < 9; i++) {
+			head2Cur.next = new ListNode(9);
+			head2Cur = head2Cur.next;
+		}
+		LinkedHelper.printLinkedTable(head2);
+		ListNode h1 = LinkedHelper.reverse(head1);
+		ListNode h2 = LinkedHelper.reverse(head2);
+
+		LinkedHelper.printLinkedTable(LinkedHelper.reverse(addTwoNumbers(h1, h2)));
+	}
+
 	public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-		Stack<Integer> s1 = new Stack<>();
-		Stack<Integer> s2 = new Stack<>();
-		putNodeToStack(l1, s1);
-		putNodeToStack(l2, s2);
+		ListNode result = new ListNode();
+		ListNode resultCur = result;
 
-		Stack<Integer> result = new Stack<>();
-		boolean upBit = false;
-		while (!s1.isEmpty() || !s2.isEmpty()) {
+		boolean needUp = false;
+		while (l1 != null && l2 != null) {
 
-			if (!s1.isEmpty() && !s2.isEmpty()) {
-				Integer value1 = s1.pop();
-				Integer value2 = s2.pop();
-				upBit = sumThenPushStack(result, upBit, value1 + value2);
-				continue;
-			}
+			SumResult sumResult = sumVal(l1.val, l2.val, needUp);
+			needUp = sumResult.needUp;
+			resultCur.next = new ListNode(sumResult.result);
 
-			if (!s1.isEmpty()) {
-				upBit = sumThenPushStack(result, upBit, s1.pop());
-				continue;
-			}
-
-			upBit = sumThenPushStack(result, upBit, s2.pop());
+			resultCur = resultCur.next;
+			l1 = l1.next;
+			l2 = l2.next;
 		}
 
-		if (upBit) {
-			result.push(1);
+		while (l1 != null) {
+			SumResult sumResult = sumVal(l1.val, 0, needUp);
+			needUp = sumResult.needUp;
+			resultCur.next = new ListNode(sumResult.result);
+			l1 = l1.next;
+			resultCur = resultCur.next;
 		}
 
-		ListNode resultNode = null;
-		ListNode lastNode = null;
-		while (!result.isEmpty()) {
-			Integer val = result.pop();
-			if (lastNode == null) {
-				resultNode = new ListNode(val);
-				lastNode = resultNode;
-			} else {
-				lastNode.next = new ListNode(val);
-				lastNode = lastNode.next;
-			}
+		while (l2 != null) {
+			SumResult sumResult = sumVal(0, l2.val, needUp);
+			needUp = sumResult.needUp;
+			resultCur.next = new ListNode(sumResult.result);
+			l2 = l2.next;
+			resultCur = resultCur.next;
 		}
 
-		return resultNode;
+		if (needUp){
+			resultCur.next = new ListNode(1);
+		}
+
+		return result.next;
 	}
 
-	private static boolean sumThenPushStack(Stack<Integer> result, boolean upBit, Integer value) {
-		// 进位+1
-		if (upBit) {
-			value = value + 1;
+	private static SumResult sumVal(int val1, int val2, boolean needUpdate) {
+		int sum = val1 + val2;
+		if (needUpdate) {
+			sum += 1;
 		}
-		// 需要标记进位
-		if (value >= 10) {
-			upBit = true;
-			result.push(value - 10);
+
+		SumResult sumResult = new SumResult();
+		if (sum > 9) {
+			sumResult.needUp = true;
+			sumResult.result = sum - 10;
 		} else {
-			upBit = false;
-			result.push(value);
+			sumResult.needUp = false;
+			sumResult.result = sum;
 		}
-		return upBit;
+		return sumResult;
 	}
+}
 
-	public static void putNodeToStack(ListNode listNode, Stack<Integer> stack) {
-		ListNode curNode = listNode;
-		while (curNode != null) {
-			stack.push(curNode.val);
-			curNode = curNode.next;
-		}
-	}
+class SumResult {
+
+	public boolean needUp;
+	public int result;
 }

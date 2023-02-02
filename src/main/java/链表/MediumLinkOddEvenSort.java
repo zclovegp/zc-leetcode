@@ -13,7 +13,7 @@ public class MediumLinkOddEvenSort {
 		node1.next = node2;
 		node2.next = node3;
 		node3.next = node4;
-		printLinkedTable(sortLinkedList(node1));
+		LinkedHelper.printLinkedTable(sortLinkedList(node1));
 	}
 
 	public static ListNode sortLinkedList(ListNode head) {
@@ -22,7 +22,7 @@ public class MediumLinkOddEvenSort {
 		ListNode jHead = divided[0];
 		ListNode oHead = divided[1];
 		// 链表倒置
-		ListNode reversedONode = reverse(oHead.next);
+		ListNode reversedONode = LinkedHelper.reverse(oHead.next);
 		// 双指针合并
 		return merge(reversedONode, jHead.next);
 	}
@@ -51,17 +51,6 @@ public class MediumLinkOddEvenSort {
 		return new ListNode[]{jHead, oHead};
 	}
 
-	public static ListNode reverse(ListNode head) {
-		ListNode preNode = null;
-		while (head != null) {
-			ListNode curNextNode = head.next;
-			head.next = preNode;
-			preNode = head;
-			head = curNextNode;
-		}
-		return preNode;
-	}
-
 	public static ListNode merge(ListNode leftHead, ListNode rightHead) {
 		ListNode result = new ListNode();
 		ListNode resultCur = result;
@@ -82,26 +71,5 @@ public class MediumLinkOddEvenSort {
 			resultCur.next = rightHead;
 		}
 		return result.next;
-	}
-
-	public static void printLinkedTable(ListNode root) {
-		if (root == null) {
-			System.out.print("null");
-			return;
-		}
-		System.out.print(root.val + "->");
-		printLinkedTable(root.next);
-	}
-}
-
-class ListNode {
-	int val;
-	ListNode next = null;
-
-	public ListNode(int val) {
-		this.val = val;
-	}
-
-	public ListNode() {
 	}
 }
