@@ -2,8 +2,6 @@ package 链表;
 
 /**
  * @author zhaochong on 2023/1/5 21:32
- * <p>
- * TODO 可改进
  */
 public class MediumLinkOddEvenSort {
 
