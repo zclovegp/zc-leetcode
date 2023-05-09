@@ -18,6 +18,6 @@ public class ConcurrentSyncMain {
 		// processors2.getAll().forEach(Thread::start);
 
 		ShowMeYourProcessor processors3 = new ConditionSync();
-		 processors3.getAll().forEach(Thread::start);
+		processors3.getAll().forEach(Thread::start);
 	}
 }

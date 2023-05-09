@@ -19,7 +19,7 @@ public class LearnReentrantLockMain {
 				System.out.println("t1被唤醒了");
 			} catch (InterruptedException e) {
 				throw new RuntimeException(e);
-			}finally {
+			} finally {
 				reentrantLock.unlock();
 			}
 		});
@@ -31,7 +31,7 @@ public class LearnReentrantLockMain {
 				System.out.println("t2被唤醒了");
 			} catch (InterruptedException e) {
 				throw new RuntimeException(e);
-			}finally {
+			} finally {
 				reentrantLock.unlock();
 			}
 		});
