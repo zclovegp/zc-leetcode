@@ -48,7 +48,7 @@ public class EvenOddPrint {
 
 	public static void process(ReentrantLock lock, ConditionBoolean conditionBoolean, int maxIndex, char[] charArray, Condition con) {
 		while (true) {
-			// 解锁
+			// 加锁
 			lock.lock();
 			System.out.println("当前抢到线程锁的线程叫" + Thread.currentThread().getName());
 			try {
@@ -70,6 +70,7 @@ public class EvenOddPrint {
 			} catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			} finally {
+				// 解锁
 				lock.unlock();
 			}
 		}
