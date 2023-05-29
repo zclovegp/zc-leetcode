@@ -1,10 +1,6 @@
 package 排序;
 
 /**
- * @author zhaochong on 2023/5/29 17:01
- */
-
-/**
  * @author zhaochong on 2023/5/29 16:59
  */
 public class FindMidNum {
