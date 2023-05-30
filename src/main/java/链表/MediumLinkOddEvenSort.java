@@ -22,9 +22,9 @@ public class MediumLinkOddEvenSort {
 		ListNode jHead = divided[0];
 		ListNode oHead = divided[1];
 		// 链表倒置
-		ListNode reversedONode = LinkedHelper.reverse(oHead.next);
+		ListNode reversedONode = LinkedHelper.reverse(oHead);
 		// 双指针合并
-		return merge(reversedONode, jHead.next);
+		return merge(reversedONode, jHead);
 	}
 
 	public static ListNode[] divide(ListNode head) {
@@ -48,7 +48,7 @@ public class MediumLinkOddEvenSort {
 		// 收尾
 		jCur.next = null;
 		oCur.next = null;
-		return new ListNode[]{jHead, oHead};
+		return new ListNode[]{jHead.next, oHead.next};
 	}
 
 	public static ListNode merge(ListNode leftHead, ListNode rightHead) {
