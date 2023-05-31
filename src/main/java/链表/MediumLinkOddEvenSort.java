@@ -24,7 +24,7 @@ public class MediumLinkOddEvenSort {
 		// 链表倒置
 		ListNode reversedONode = LinkedHelper.reverse(oHead);
 		// 双指针合并
-		return merge(reversedONode, jHead);
+		return mergeV2(reversedONode, jHead);
 	}
 
 	public static ListNode[] divide(ListNode head) {
@@ -49,6 +49,46 @@ public class MediumLinkOddEvenSort {
 		jCur.next = null;
 		oCur.next = null;
 		return new ListNode[]{jHead.next, oHead.next};
+	}
+
+	public static ListNode mergeV2(ListNode leftHead, ListNode rightHead) {
+		ListNode result = new ListNode();
+		ListNode curResult = result;
+		while (leftHead != null || rightHead != null) {
+			ListNode littleNode = getLittleNode(leftHead, rightHead);
+			if (littleNode == null) {
+				break;
+			}
+
+			if (leftHead == littleNode) {
+				leftHead = leftHead.next;
+			}
+
+			if (rightHead == littleNode) {
+				rightHead = rightHead.next;
+			}
+
+			curResult.next = littleNode;
+			curResult = curResult.next;
+		}
+		return result.next;
+	}
+
+	public static ListNode getLittleNode(ListNode node1, ListNode node2) {
+		if (node1 == null && node2 == null) {
+			return null;
+		}
+		if (node1 == null) {
+			return node2;
+		}
+		if (node2 == null) {
+			return node1;
+		}
+		if (node1.val < node2.val) {
+			return node1;
+		} else {
+			return node2;
+		}
 	}
 
 	public static ListNode merge(ListNode leftHead, ListNode rightHead) {
