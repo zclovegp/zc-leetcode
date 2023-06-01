@@ -59,7 +59,7 @@ public class MediumSumTwoLinkedList {
 			resultCur = resultCur.next;
 		}
 
-		if (needUp){
+		if (needUp) {
 			resultCur.next = new ListNode(1);
 		}
 
