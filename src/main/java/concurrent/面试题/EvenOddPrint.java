@@ -1,4 +1,4 @@
-package concurrent.gift;
+package concurrent.面试题;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;

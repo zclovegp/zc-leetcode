@@ -12,39 +12,32 @@ public class LearnReentrantLockMain {
 		ReentrantLock reentrantLock = new ReentrantLock();
 		Condition c1 = reentrantLock.newCondition();
 
-		Thread t1 = new Thread(() -> {
-			reentrantLock.lock();
-			try {
-				c1.await();
-				System.out.println("t1被唤醒了");
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			} finally {
-				reentrantLock.unlock();
-			}
-		});
+		for (int i = 0; i < 5; i++) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					while (true) {
 
-		Thread t2 = new Thread(() -> {
-			reentrantLock.lock();
-			try {
-				c1.await();
-				System.out.println("t2被唤醒了");
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			} finally {
-				reentrantLock.unlock();
-			}
-		});
+						try {
+							reentrantLock.lock();
+							reentrantLock.lock();
+							System.out.println(Thread.currentThread().getName() + "===：加锁成功!");
+							System.out.println(Thread.currentThread().getName() + "===：holdCount:" + reentrantLock.getHoldCount());
+							Thread.sleep(3000);
+							System.out.println(Thread.currentThread().getName() + "===：开始执行await");
+							c1.await();
+							System.out.println(Thread.currentThread().getName() + "===：开始恢复继续执行!!!");
+						} catch (InterruptedException e) {
+							throw new RuntimeException(e);
+						} finally {
+							System.out.println(Thread.currentThread().getName() + "===：执行final!");
+						}
+					}
+				}
+			}).start();
+		}
 
-		t1.start();
-		t2.start();
-
-		Thread.sleep(3000);
-
-		reentrantLock.lock();
-		reentrantLock.lock();
-		reentrantLock.lock();
-
-		System.out.println("待执行");
+		Thread.sleep(20000);
+		System.out.println(Thread.currentThread().getName() + "===：holdCount:" + reentrantLock.getHoldCount());
 	}
 }
