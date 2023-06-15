@@ -12,39 +12,40 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author zhaochong on 2023/6/1 11:58
  */
-public class PrintNumOneByOne {
+public class 多线程交替打印 {
 
 	private static volatile int num = 1;
 	private static final ReentrantLock LOCK = new ReentrantLock();
 	private static final Condition CON = LOCK.newCondition();
 	private static final CountDownLatch CD = new CountDownLatch(5);
 
-
 	public static void main(String[] args) throws InterruptedException {
 
 		for (int i = 0; i < 5; i++) {
+
+			int finalI = i;
 			Thread t = new Thread(() -> {
+
+				LOCK.lock();
+
 				try {
-					// 先上锁
-					LOCK.lock();
-
 					while (num <= 100) {
-						System.out.println(Thread.currentThread().getName() + "打印数字:" + num + ", holdCount:" + LOCK.getHoldCount());
-						num++;
-						CON.signal();
-						CON.await();
+						if (num % 5 == finalI) {
+							System.out.println(Thread.currentThread().getName() + "打印了===>" + num);
+							num++;
+							CON.signalAll();
+						} else {
+							CON.await();
+						}
 					}
-
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
-				} finally {
-					CON.signal();
-					LOCK.unlock();
 				}
 
-				System.out.println(Thread.currentThread().getName() + "跳出循环前唤起其他线程");
+				CON.signal();
+				LOCK.unlock();
 				CD.countDown();
-			});
+			}, "线程" + finalI);
 
 			t.start();
 		}

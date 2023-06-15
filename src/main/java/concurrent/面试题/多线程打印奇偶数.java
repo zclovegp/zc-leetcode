@@ -24,7 +24,7 @@ public class 多线程打印奇偶数 {
 					if (charArray[curIndex] % 2 != 0) {
 						System.out.println(Thread.currentThread().getName() + "charArray[curIndex]:" + charArray[curIndex]);
 						curIndex++;
-						// 把condition队列头节点挪到锁队列
+						// 把condition队列头节点挪到锁队列（因为就两个线程，所以用signal把头节点挪走就行）
 						con.signal();
 					} else {
 						// 完全释放当前锁资源，unpark锁队列头节点，park自己
@@ -35,6 +35,7 @@ public class 多线程打印奇偶数 {
 				}
 			}
 			con.signal();
+			// 最后一次靠unlock释放锁，之前靠await释放锁
 			lock.unlock();
 		});
 		奇数线程.setName("奇数线程!");
