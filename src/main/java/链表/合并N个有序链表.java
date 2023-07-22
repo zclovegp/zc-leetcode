@@ -1,6 +1,7 @@
 package 链表;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,42 +15,45 @@ import java.util.concurrent.atomic.AtomicReference;
 public class 合并N个有序链表 {
 
 	public static void main(String[] args) {
-		ListNodeComparable root1 = new ListNodeComparable(1);
-		root1.next = new ListNodeComparable(2);
-		root1.next.next = new ListNodeComparable(3);
+		ListNodeForHere root1 = new ListNodeForHere(1);
+		root1.next = new ListNodeForHere(2);
+		root1.next.next = new ListNodeForHere(3);
 
-		ListNodeComparable root2 = new ListNodeComparable(4);
-		root2.next = new ListNodeComparable(5);
-		root2.next.next = new ListNodeComparable(6);
-		root2.next.next.next = new ListNodeComparable(7);
+		ListNodeForHere root2 = new ListNodeForHere(4);
+		root2.next = new ListNodeForHere(5);
+		root2.next.next = new ListNodeForHere(6);
+		root2.next.next.next = new ListNodeForHere(7);
 
-		List<ListNodeComparable> input = new ArrayList<>();
+		List<ListNodeForHere> input = new ArrayList<>();
 		input.add(root1);
 		input.add(root2);
 
 		printNode(mergeKLists(input));
 	}
 
-	public static ListNodeComparable mergeKLists(List<ListNodeComparable> lists) {
+	public static ListNodeForHere mergeKLists(List<ListNodeForHere> lists) {
 		// 初始化每个链表的头节点
-		Map<Integer, ListNodeComparable> indexWithCurNode = new HashMap<>();
+		Map<Integer, ListNodeForHere> indexWithCurNode = new HashMap<>();
 		for (int i = 0; i < lists.size(); i++) {
 			indexWithCurNode.put(i, lists.get(i));
 		}
 
-		ListNodeComparable resultCurNode = new ListNodeComparable(999);
-		ListNodeComparable head = resultCurNode;
+		ListNodeForHere resultCurNode = new ListNodeForHere(999);
+		ListNodeForHere head = resultCurNode;
 		while (indexWithCurNode.values().stream().anyMatch(Objects::nonNull)) {
-			PriorityQueue<ListNodeComparable> queue = new PriorityQueue<>();
+
+			// 使用优先级队列
+			PriorityQueue<ListNodeForHere> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.val));
+
 			// 扔到优先级队列
 			for (int i = 0; i < lists.size(); i++) {
-				ListNodeComparable indexCurNode = indexWithCurNode.get(i);
+				ListNodeForHere indexCurNode = indexWithCurNode.get(i);
 				if (indexCurNode != null) {
 					queue.add(indexCurNode);
 				}
 			}
 
-			ListNodeComparable first = queue.peek();
+			ListNodeForHere first = queue.peek();
 			if (first == null) {
 				break;
 			}
@@ -71,7 +75,7 @@ public class 合并N个有序链表 {
 		return head.next;
 	}
 
-	public static void printNode(ListNodeComparable node) {
+	public static void printNode(ListNodeForHere node) {
 		if (node == null) {
 			return;
 		}
@@ -81,16 +85,11 @@ public class 合并N个有序链表 {
 	}
 }
 
-class ListNodeComparable implements Comparable<ListNodeComparable> {
+class ListNodeForHere {
 	int val;
-	ListNodeComparable next = null;
+	ListNodeForHere next = null;
 
-	public ListNodeComparable(int val) {
+	public ListNodeForHere(int val) {
 		this.val = val;
-	}
-
-	@Override
-	public int compareTo(ListNodeComparable o) {
-		return Integer.compare(this.val, o.val);
 	}
 }
