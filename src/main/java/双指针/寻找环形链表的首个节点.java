@@ -1,5 +1,7 @@
 package 双指针;
 
+import common.ListNode;
+
 /**
  * 快慢指针
  *
