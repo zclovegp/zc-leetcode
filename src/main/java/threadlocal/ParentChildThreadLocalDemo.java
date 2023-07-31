@@ -4,20 +4,22 @@ package threadlocal;
  * @author zhaochong on 2023/7/17 11:37
  */
 public class ParentChildThreadLocalDemo {
-
-	private static InheritableThreadLocal<String> threadLocal = new InheritableThreadLocal<>();
+	private static ThreadLocal<User> EXTEND_THREAD_LOCAL = new InheritableThreadLocal<>();
 
 	public static void main(String[] args) throws InterruptedException {
-		// 父线程设置ThreadLocal变量的值
-		threadLocal.set("Hello, ThreadLocal!");
+		User u = new User();
+		u.name = "zc";
+		u.age = 30;
+		EXTEND_THREAD_LOCAL.set(u);
 
 		// 创建子线程
 		Thread childThread = new Thread(() -> {
 			while (true) {
 				// 子线程获取父线程中的ThreadLocal变量的值
-				String value = threadLocal.get();
-				threadLocal.set("我重新定义了");
-				System.out.println("子线程获取到的值：" + value);
+				User value = EXTEND_THREAD_LOCAL.get();
+				System.out.println("子线程获取到的值：" + value.name + "~" + value.age);
+				value.name = "child-zc";
+				value.age = 40;
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -28,8 +30,12 @@ public class ParentChildThreadLocalDemo {
 
 		// 启动子线程
 		childThread.start();
-
-		Thread.sleep(5000);
-		System.out.println(Thread.currentThread().getName() + threadLocal.get());
+		Thread.sleep(3000);
+		System.out.println(Thread.currentThread().getName() + EXTEND_THREAD_LOCAL.get().name + "~" + EXTEND_THREAD_LOCAL.get().age);
 	}
+}
+
+class User {
+	public String name;
+	public int age;
 }
