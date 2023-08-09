@@ -5,5 +5,5 @@ ssh-agent -s
 ssh-add ~/.ssh/id_rsa
 
 !!!提交后记着恢复回来!!!
-git config --global --replace-all user.name "chong.zhao"
-git config --global --replace-all user.email "chong.zhao@bianlifeng.com"
+git config --global --replace-all user.name "zhaochong09"
+git config --global --replace-all user.email "zhaochong09@meituan.com"
