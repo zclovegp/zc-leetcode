@@ -32,18 +32,19 @@ public class CompletedFutureDemo {
                     throw new RuntimeException(e);
                 }
                 System.out.println(Thread.currentThread().getName() + "here is not return =======> first");
-                // 线程中的异常记住要try住
-                try {
-                    throw new RuntimeException("失败了别慌哦!");
-                } catch (Exception e) {
-                    System.out.println("错了没什么大不了");
-                }
+                // 这里的异常计算抛出去，框架层还是可以捕获到的，不会造成线程的假死
+                // 但是如果是一个定时任务的线程池，需要注意线程处理方法需要try住避免造成死锁
+                throw new RuntimeException("失败了别慌哦!");
             }, POOL);
             result.add(completableFuture);
         }
-
-        CompletableFuture.allOf(result.toArray(new CompletableFuture[0])).join();
-        System.out.println("first all is done");
+        System.out.println("开始执行 first!");
+        try {
+            CompletableFuture.allOf(result.toArray(new CompletableFuture[0])).join();
+        } catch (Exception e) {
+            System.out.println("join过程中出现异常");
+        }
+        System.out.println("first all is done!");
     }
 
     private static void returnCompletableFutureTest() {
