@@ -13,3 +13,5 @@
 可视化引擎   com.sankuai.mallscmplanning.docengine
 
 可视化server   com.sankuai.mallscmplanning.analysis
+
+仓储pis   com.sankuai.mcqms.pis.manager
