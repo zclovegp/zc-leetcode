@@ -1,0 +1,15 @@
+集单  com.sankuai.mall.purchase.oms
+
+调拨  com.sankuai.mall.ams.ams
+
+调拨-api  com.sankuai.mall.ams.api
+
+采购  com.sankuai.mall.pms.pms
+
+退供  com.sankuai.mall.srms.srms
+
+风控  com.sankuai.mallforecast.riskmanagement
+
+可视化引擎   com.sankuai.mallscmplanning.docengine
+
+可视化server   com.sankuai.mallscmplanning.analysis
