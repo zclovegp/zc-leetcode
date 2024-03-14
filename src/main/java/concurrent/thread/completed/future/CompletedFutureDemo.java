@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
+ * test
  * @author zhaochong on 2023/8/10 14:17
  */
 public class CompletedFutureDemo {
